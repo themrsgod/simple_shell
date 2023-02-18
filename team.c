@@ -1,12 +1,12 @@
 #include <stdio.h>
 
 /*
-* main - team vm
+* team - team vm
 * file name team vm
 * return: 0
 */
 
-int main(){
-printf("hello");
-return (0);
+int team(){
+	printf("hello, from vivian and moses");
+	return (0);
 }
