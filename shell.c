@@ -26,6 +26,14 @@ int main(void)
 
 		/* Read user input*/
 		fgets(buffer, BUFFER_SIZE, stdin);
+		
+		if (fgets(buffer, BUFFER_SIZE, stdin) == NULL) 
+		{
+			/* Handle end of file (Ctrl+D) */
+			printf("\n");
+			should_run = 0;
+			break;
+		}
 
 		/* Remove trailing newline character*/
 		if (buffer[strlen(buffer) - 1] == '\n')
@@ -34,6 +42,7 @@ int main(void)
 		}
 
 		token = strtok(buffer, " ");
+        int argc = tokenize(buffer, args);
 
 		while (token != NULL)
 		{

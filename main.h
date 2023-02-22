@@ -1,17 +1,43 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include <unistd.h>
+#include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
+#include <stdlib.h>
+#include <signal.h>
+extern char **environ;
+extern int dircount;
+#define DELIM " \n\t"
 
-#define MAX_LINE 80
-#define BUFFER_SIZE 1024
+void env(char **env);
+int _strlen(char *s);
+int _strcmp(char *s1, char *s2);
+char *_strdup(char *str);
+void prompt(void);
+char *get_line(void);
+char **split_line(char *line);
+char *get_env(char **env);
+char *pathCat(char *dir, char *av);
+char **dirTok(char **env);
+void loop(char **env);
 
-int run_shell(char *args[MAX_LINE / 2 + 1], int should_run, char buffer[BUFFER_SIZE]);
-int wait_for(void);
-int execute_cild_process(char *args[MAX_LINE / 2 + 1], char buf[BUFFER_SIZE]);
+void buffers1(char *line, char **command);
+void buffers2(char **dir, char *combine);
+void buffers3(char **tokens, char *buf);
+void buffers4(char **tok, char *buf2);
+void buffers5(char *dup);
+
+char *checkPath(char **dir, char *command);
+int execute(char *fullPath, char **command);
+int exit_sh(char **command);
+int cd(char **command);
+int printenv(char **command);
+int checkBuiltins(char *combine, char **command);
+void handler(int sig);
+
 
 #endif
