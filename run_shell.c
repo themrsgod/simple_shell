@@ -31,7 +31,7 @@ int run_shell(char *args[MAX_LINE / 2 + 1], int flag, char buf[BUFFER_SIZE])
 		}
 		else
 		{
-			return wait_for();
+			return (wait_for());
 		}
 	}
 	return (flag);
