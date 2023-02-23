@@ -16,7 +16,7 @@ extern int dircount;
 
 
 void env(char **env);
-ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+ssize_t my_getline(char **lineptr, size_t *n, FILE *stream);
 int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
