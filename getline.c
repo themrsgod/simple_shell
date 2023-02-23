@@ -41,7 +41,7 @@ ssize_t getline(char **lineptr, size_t *n, FILE *stream)
 				free(buffer);
 				return (-1);
 			}
-			buffer = new_buffer;		
+			buffer = new_buffer;
 		}
 
 		buffer[i++] = c;
