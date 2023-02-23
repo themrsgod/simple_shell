@@ -35,17 +35,17 @@ ssize_t getline(char **lineptr, size_t *n, FILE *stream)
 		{
 			buffer_size *= 2;
 			char *new_buffer = (char *) realloc(buffer, buffer_size);
-			
+
 			if (!new_buffer)
 			{
 				free(buffer);
-				return -1;
+				return (-1);
 			}
 			buffer = new_buffer;		
 		}
 
 		buffer[i++] = c;
-		
+
 		if (c == '\n')
 		{
 			break;
