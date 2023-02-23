@@ -6,58 +6,37 @@
 * @n: size of input
 * @stream: file input stream
 */
-
-size_t my_getline(char **lineptr, size_t *n, FILE *stream)
+ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-  size_t bsz, i;
-  char *buf;
-  int c;
+		if (!lineptr || !n || !stream) {
+				return (-1);
+		}
 
-  if (!lineptr || !n || !stream)
-  {
-	return (-1);
-  }
+		size_t i = 0, max = *n;
+		int c;
 
-  bsz = *n;
-  i = 0;
-  buf = *lineptr ? *lineptr : malloc(bsz = 64);
+		while ((c = fgetc(stream)) != EOF) {
+				if (i == max - 1) {
+						max *= 2;
+						*lineptr = realloc(*lineptr, max);
+						if (!*lineptr) {
+								return (-1);
+						}
+						*n = max;
+				}
 
-  if (!buf)
-  {
-	return (-1);
-  }
+				(*lineptr)[i++] = c;
 
-  while ((c = getc(stream)) != EOF)
-  {
-	if (i >= bsz - 1)
-	{
-	  char *new_buf = realloc(buf, bsz *= 2);
+				if (c == '\n') {
+						break;
+				}
+		}
 
-	  if (!new_buf)
-	  {
-		free(buf);
-		return (-1);
-	  }
+		(*lineptr)[i] = '\0';
 
-	  buf = new_buf;
-	}
+		if (i == 0 && c == EOF) {
+				return (-1);
+		}
 
-	buf[i++] = c;
-
-	if (c == '\n')
-	{
-	  break;
-	}
-  }
-
-  buf[i] = '\0';
-  *lineptr = buf;
-  *n = bsz;
-
-  if (i == 0 && c == EOF)
-  {
-	return (-1);
-  }
-
-  return (i);
+		return (i);
 }
