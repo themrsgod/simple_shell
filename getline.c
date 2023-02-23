@@ -24,7 +24,6 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 						return (-1);
 					*n = max;
 			}
-
 			(*lineptr)[i++] = c;
 
 			if (c == '\n')
@@ -35,6 +34,5 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 
 		if (i == 0 && c == EOF)
 			return (-1);
-
 		return (i);
 }
