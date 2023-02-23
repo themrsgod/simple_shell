@@ -12,8 +12,11 @@
 extern char **environ;
 extern int dircount;
 #define DELIM " \n\t"
+#define INITIAL_BUFFER_SIZE 128
+
 
 void env(char **env);
+ssize_t getline(char **lineptr, size_t *n, FILE *stream);
 int _strlen(char *s);
 int _strcmp(char *s1, char *s2);
 char *_strdup(char *str);
