@@ -6,60 +6,22 @@
 * @n: size of input
 * @stream: file input stream
 */
-ssize_t getline(char **lineptr, size_t *n, FILE *stream)
-{
-	if (!lineptr || !n || !stream)
+ssize_t getline(char **lineptr, size_t *n, FILE *stream) {
+    if (!lineptr || !n || !stream) return -1;
+    ssize_t count = 0, capacity = *n;
+    char *buffer = *lineptr ? *lineptr : malloc(capacity = 128);
+    if (!buffer) return -1;
+    for (;;)
 	{
-		return (-1);
-	}
-
-	size_t buffer_size = *n;
-	char *buffer = *lineptr;
-
-	if (!buffer || buffer_size < INITIAL_BUFFER_SIZE)
-	{
-		buffer_size = INITIAL_BUFFER_SIZE;
-		buffer = (char *) malloc(buffer_size);
-		if (!buffer)
-		{
-			return (-1);
-		}
-	}
-
-	size_t i = 0;
-	int c;
-
-	while ((c = getc(stream)) != EOF)
-	{
-		if (i >= buffer_size - 1)
-		{
-			buffer_size *= 2;
-			char *new_buffer = (char *) realloc(buffer, buffer_size);
-
-			if (!new_buffer)
-			{
-				free(buffer);
-				return (-1);
-			}
-			buffer = new_buffer;
-		}
-
-		buffer[i++] = c;
-
-		if (c == '\n')
-		{
-			break;
-		}
-	}
-
-	buffer[i] = '\0';
-	*lineptr = buffer;
-	*n = buffer_size;
-
-	if (i == 0 && c == EOF)
-	{
-		return (-1);
-	}
-
-	return (i);
+        int c = fgetc(stream);
+        if (c == EOF || c == '\n') break;
+        if (++count >= capacity) buffer = realloc(buffer, capacity *= 2);
+        if (!buffer) return -1;
+        buffer[count - 1] = c;
+    }
+    if (count == 0 && c == EOF) return -1;
+    buffer[count] = '\0';
+    *lineptr = buffer;
+    *n = capacity;
+    return count;
 }
