@@ -6,18 +6,22 @@
 * @n: size of input
 * @stream: file input stream
 */
-ssize_t getline(char **lineptr, size_t *n, FILE *stream) {
-	if (!lineptr || !n || !stream) {
+ssize_t getline(char **lineptr, size_t *n, FILE *stream)
+{
+	if (!lineptr || !n || !stream) 
+	{
 		return (-1);
 	}
 
 	size_t buffer_size = *n;
 	char *buffer = *lineptr;
 
-	if (!buffer || buffer_size < INITIAL_BUFFER_SIZE) {
+	if (!buffer || buffer_size < INITIAL_BUFFER_SIZE)
+	{
 		buffer_size = INITIAL_BUFFER_SIZE;
 		buffer = (char *) malloc(buffer_size);
-		if (!buffer) {
+		if (!buffer)
+		{
 			return (-1);
 		}
 	}
@@ -43,7 +47,8 @@ ssize_t getline(char **lineptr, size_t *n, FILE *stream) {
 
 		buffer[i++] = c;
 		
-		if (c == '\n') {
+		if (c == '\n')
+		{
 			break;
 		}
 	}
@@ -52,7 +57,8 @@ ssize_t getline(char **lineptr, size_t *n, FILE *stream) {
 	*lineptr = buffer;
 	*n = buffer_size;
 
-	if (i == 0 && c == EOF) {
+	if (i == 0 && c == EOF)
+	{
 		return (-1);
 	}
 
