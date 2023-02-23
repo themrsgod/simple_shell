@@ -14,14 +14,14 @@ char *get_line(void)
 	buffers3(NULL, buf);
 
 	if (test == EOF)
-		{
-			buffers1(NULL, NULL);
-			buffers2(NULL, NULL);
-			buffers3(NULL, NULL);
-			buffers4(NULL, NULL);
-			buffers5(NULL);
-			_exit(0);
-		}
+	{
+		buffers1(NULL, NULL);
+		buffers2(NULL, NULL);
+		buffers3(NULL, NULL);
+		buffers4(NULL, NULL);
+		buffers5(NULL);
+		_exit(0);
+	}
 	return (buf);
 }
 
@@ -41,21 +41,21 @@ char **split_line(char *line)
 	dup_buf = _strdup(line);
 	token = strtok(line, DELIM);
 	while (token)
-		{
-			token = strtok(NULL, DELIM);
-			i++;
-		}
+	{
+		token = strtok(NULL, DELIM);
+		i++;
+	}
 	tok = malloc(4096);
 	buffers4(tok, NULL);
 
 	toks = strtok(dup_buf, DELIM);
 	i = 0;
 	while (toks)
-		{
-			tok[i] = toks;
-			toks = strtok(NULL, DELIM);
-			i++;
-		}
+	{
+		tok[i] = toks;
+		toks = strtok(NULL, DELIM);
+		i++;
+	}
 	tok[i] = '\0';
 	return (tok);
 }
