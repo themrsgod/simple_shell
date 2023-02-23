@@ -8,28 +8,31 @@
 */
 ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
+		size_t i, max;
+		int c;
+
 		if (!lineptr || !n || !stream)
 			return (-1);
 
-		size_t i = 0, max = *n;
-		int c;
+		i = 0;
+		max = *n;
 
 		while ((c = fgetc(stream)) != EOF)
 		{
 			if (i == max - 1)
 			{
 					max *= 2;
-					*lineptr = realloc(*lineptr, max);
-					if (!*lineptr)
-						return (-1);
+					char *new_ptr = realloc(*lineptr, max);
+					if (!new_ptr) {
+							return (-1);
+					}
+					*lineptr = new_ptr;
 					*n = max;
 			}
 			(*lineptr)[i++] = c;
-
 			if (c == '\n')
-				break;
+					break;
 		}
-
 		(*lineptr)[i] = '\0';
 
 		if (i == 0 && c == EOF)
