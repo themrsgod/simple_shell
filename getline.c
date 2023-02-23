@@ -6,22 +6,40 @@
 * @n: size of input
 * @stream: file input stream
 */
-ssize_t getline(char **lineptr, size_t *n, FILE *stream) {
-    if (!lineptr || !n || !stream) return -1;
-    ssize_t count = 0, capacity = *n;
-    char *buffer = *lineptr ? *lineptr : malloc(capacity = 128);
-    if (!buffer) return -1;
-    for (;;)
+#include <stdio.h>
+#include <stdlib.h>
+
+ssize_t getline(char **lineptr, size_t *n, FILE *stream)
+{
+	if (!lineptr || !n || !stream)
+		return (-1);
+
+	size_t bsz = *n, i = 0;
+	char *buf = *lineptr ? *lineptr : malloc(bsz = 64);
+	if (!buf)
+		return (-1);
+		
+	int c;
+	
+	while ((c = getc(stream)) != EOF)
 	{
-        int c = fgetc(stream);
-        if (c == EOF || c == '\n') break;
-        if (++count >= capacity) buffer = realloc(buffer, capacity *= 2);
-        if (!buffer) return -1;
-        buffer[count - 1] = c;
-    }
-    if (count == 0 && c == EOF) return -1;
-    buffer[count] = '\0';
-    *lineptr = buffer;
-    *n = capacity;
-    return count;
+		if (i >= bsz - 1)
+		{
+			buf = realloc(buf, bsz *= 2);
+			if (!buf)
+				return (-1);
+		}
+		buf[i++] = c;
+		if (c == '\n')
+			break;
+	}
+
+	buf[i] = '\0';
+	*lineptr = buf;
+	*n = bsz;
+
+	if (i == 0 && c == EOF)
+		return (-1);
+
+	return (i);
 }
