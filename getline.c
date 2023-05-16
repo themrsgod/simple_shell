@@ -12,7 +12,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
     size_t i, max;
     int c;
-    char *new_ptr; // Declare new_ptr here
+    char *new_ptr; /* Declare new_ptr here */
 
     if (!lineptr || !n || !stream)
         return (-1);
@@ -24,7 +24,7 @@ ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
         if (i == max - 1)
         {
             max *= 2;
-            new_ptr = realloc(*lineptr, max); // Assign realloc result to new_ptr
+            new_ptr = realloc(*lineptr, max); /* Assign realloc result to new_ptr */
 
             if (!new_ptr)
                 return (-1);
